@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Vertice<T> {
+    private Long id;
     private T data;
     private ArrayList<Aresta<T>> arestasEntrada;
     private ArrayList<Aresta<T>> arestasSaida;
@@ -9,6 +10,15 @@ public class Vertice<T> {
         this.data = data;
         this.arestasEntrada = new ArrayList<Aresta<T>>();
         this.arestasSaida = new ArrayList<Aresta<T>>();
+        this.id = -1L;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return this.id;
     }
 
     public void setData(T data) {

@@ -2,12 +2,22 @@ public class Aresta<T> {
     private Double peso;
     private Vertice<T> inicio;
     private Vertice<T> fim;
+    private Boolean direcionado;
 
 
     public Aresta(Double peso, Vertice<T> inicio, Vertice<T> fim) {
         this.peso = peso;
         this.inicio = inicio;
         this.fim = fim;
+        this.direcionado = false;
+    }
+
+    public void setDirecionado(Boolean isDirecionado) {
+        this.direcionado = isDirecionado;
+    }
+
+    public Boolean isDirecionado() {
+        return this.direcionado;
     }
 
     public Double getPeso() {
