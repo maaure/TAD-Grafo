@@ -1,4 +1,5 @@
 public class Aresta<T> {
+    private Integer id;
     private Double peso;
     private Vertice<T> inicio;
     private Vertice<T> fim;
@@ -11,6 +12,21 @@ public class Aresta<T> {
         this.fim = fim;
         this.direcionado = false;
     }
+
+
+    public Integer getId() {
+        return this.id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Boolean getDirecionado() {
+        return this.direcionado;
+    }
+
+
 
     public void setDirecionado(Boolean isDirecionado) {
         this.direcionado = isDirecionado;

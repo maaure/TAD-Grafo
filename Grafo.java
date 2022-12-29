@@ -4,6 +4,7 @@ import java.util.Vector;
 
 public class Grafo<T> {
 
+    private static int index = 0;
     private ArrayList<Vertice<T>> vertices;
     private ArrayList<Aresta<T>> arestas;
     private ArrayList<ArrayList<Vector<Aresta<T>>>> matrizAdjacencia;
@@ -11,7 +12,11 @@ public class Grafo<T> {
     public Grafo() {
         this.vertices = new ArrayList<>();
         this.arestas = new ArrayList<>();
-        this.matrizAdjacencia = calcularMatrizAdjacencia(vertices.size());
+        this.matrizAdjacencia = new ArrayList<ArrayList<Vector<Aresta<T>>>>();
+    }
+
+    private static int getIdNextVertex() {
+        return ++index;
     }
 
     /**
@@ -21,41 +26,59 @@ public class Grafo<T> {
      */
     public int adicionarVertice(T data) {
         Vertice<T> v = new Vertice<T>(data);
-        v.setId(vertices.size());
+        v.setId(getIdNextVertex());
         vertices.add(v);
         adicionarVerticeMatrizAdjacencia(v);
         return v.getId();
     }
 
-    public void adicionarVerticeMatrizAdjacencia(Vertice<T> v) {
-        
+    public Vertice<T> adicionarVertice(Vertice<T> v) {
+        v.setId(getIdNextVertex());
+        vertices.add(v);
+        adicionarVerticeMatrizAdjacencia(v);
+        return v;
     }
 
-    private ArrayList<ArrayList<Vector<Aresta<T>>>> calcularMatrizAdjacencia(Integer nVertices) {
-        ArrayList<ArrayList<Vector<Aresta<T>>>> matrizAdjacencia = new ArrayList<>();
-        for (int i = 0; i < nVertices; i++) {
-            ArrayList<Vector<Aresta<T>>> l = new ArrayList<>();
-            for (int j = 0; j < nVertices; j++) {
-                l.add(new Vector<Aresta<T>>());
+    public Aresta<T> adicionarAresta(Double peso, Vertice<T> inicio, Vertice<T> fim) {
+        Aresta<T> a = new Aresta<T>(peso, inicio, fim);
+        int indexInicio = conseguirEnderecoMatrizAdjacencia(inicio);
+        int indexFim = conseguirEnderecoMatrizAdjacencia(fim);
+        matrizAdjacencia.get(indexInicio).get(indexFim).add(a);
+        return a;
+    }
+
+
+    public int conseguirEnderecoMatrizAdjacencia(Vertice<T> v) {
+        int id = v.getId();
+        for(int i = 0; i < vertices.size(); i++) {
+            if(vertices.get(i).getId() == id) {
+                return i;
             }
-            matrizAdjacencia.add(l);
         }
-        return matrizAdjacencia;
+        return -1;
+    }
+
+    public void adicionarVerticeMatrizAdjacencia(Vertice<T> v) {
+        matrizAdjacencia.add(new ArrayList<Vector<Aresta<T>>>());
+        for(ArrayList<Vector<Aresta<T>>> i : matrizAdjacencia) {
+            while(i.size() < vertices.size()) {
+                i.add(new Vector<Aresta<T>>());
+            }
+        }
+
     }
 
     public void printVertices() {
         for (Vertice<T> v : vertices) {
-            System.out.print(v.getId() + ": " + v.getData() + " ");
+            System.out.print("[" + v.getId() + ": " + v.getData() + "] ");
         }
         System.out.println();
     }
 
     public void printMatrizAdjacencia() {
-        Iterator<ArrayList<Vector<Aresta<T>>>> it = this.matrizAdjacencia.iterator();
-        while (it.hasNext()) {
-            ArrayList<Vector<Aresta<T>>> v = it.next();
-            for (int i = 0; i < v.size(); i++) {
-                System.out.print(v.get(i) + " ");
+        for(int i = 0; i < vertices.size(); i++) {
+            for(int j = 0; j < vertices.size(); j++) {
+                System.out.print(matrizAdjacencia.get(i).get(j) + " ");
             }
             System.out.println();
         }
