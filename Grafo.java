@@ -140,7 +140,7 @@ public class Grafo<T> {
     }
 
 
-    public List<Aresta<T>> getListaVertices() {
+    public List<Vertice<T>> getListaVertices() {
         return Collections.unmodifiableList(this.vertices);
     }
 
