@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
 
@@ -77,7 +78,7 @@ public class Grafo<T> {
         arestas.remove(e);
     }
 
-    public void adicionarVerticeMatrizAdjacencia(Vertice<T> v) {
+    private void adicionarVerticeMatrizAdjacencia(Vertice<T> v) {
         matrizAdjacencia.add(new ArrayList<Vector<Aresta<T>>>());
         for (ArrayList<Vector<Aresta<T>>> i : matrizAdjacencia) {
             while (i.size() < vertices.size()) {
@@ -119,7 +120,7 @@ public class Grafo<T> {
     public Vertice<T> oposto(Vertice<T> v, Aresta<T> e) {
         List<Vertice<T>> vertices = e.vertices();
         if(!vertices.contains(v)) throw new RuntimeException("Vertice não pertence a aresta.");
-        return vertices.get(0).equals(v) ? vertices.get(0) : vertices.get(1);
+        return vertices.get(0).equals(v) ? vertices.get(1) : vertices.get(0);
     }
 
     public boolean isAdjacente(Vertice<T> v, Vertice<T> w) {
@@ -132,6 +133,10 @@ public class Grafo<T> {
 
     public void substituir(Aresta<T> e, T x) {
         e.setData(x);
+    }
+
+    public List<Aresta<T>> getListaArestas() {
+        return Collections.unmodifiableList(this.arestas);
     }
 
 }
