@@ -27,11 +27,21 @@ public class Main {
         g.adicionarAresta(null, v1, v2);
         g.adicionarAresta(null, v2, v1);
 
-        g.adicionarAresta(null, v1, v6);
-        g.adicionarAresta(null, v6, v1);
-        g.adicionarAresta(null, v6, v1);
+        g.adicionarAresta(null, v5, v3);
+        g.adicionarAresta(null, v3, v5);
+        g.adicionarAresta(null, v3, v5);
+        g.adicionarAresta(null, v3, v5);
+        g.adicionarAresta(null, v2, v2);
 
-        g.printMatrizAdjacencia();
+        g.printMatrizAdjacenciaQtde();
+
+        g.removeVertice(v1);
+
+        System.out.println();
+
+
+        g.printMatrizAdjacenciaQtde();
+
 
     }
 }

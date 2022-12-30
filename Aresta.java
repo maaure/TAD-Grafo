@@ -4,7 +4,7 @@ public class Aresta<T> {
     private Vertice<T> inicio;
     private Vertice<T> fim;
     private Boolean direcionado;
-
+    private T data;
 
     public Aresta(Double peso, Vertice<T> inicio, Vertice<T> fim) {
         this.peso = peso;
@@ -13,6 +13,13 @@ public class Aresta<T> {
         this.direcionado = false;
     }
 
+    public T getData() {
+        return this.data;
+    }
+
+    public void setData(T data) {
+        this.data = data;
+    }
 
     public Integer getId() {
         return this.id;

@@ -1,5 +1,5 @@
 import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 public class Grafo<T> {
@@ -24,12 +24,12 @@ public class Grafo<T> {
      * @return int
      *         Retorna o ID do vertice do dado recém inserido
      */
-    public int adicionarVertice(T data) {
+    public Vertice<T> adicionarVertice(T data) {
         Vertice<T> v = new Vertice<T>(data);
         v.setId(getIdNextVertex());
         vertices.add(v);
         adicionarVerticeMatrizAdjacencia(v);
-        return v.getId();
+        return v;
     }
 
     public Vertice<T> adicionarVertice(Vertice<T> v) {
@@ -43,25 +43,43 @@ public class Grafo<T> {
         Aresta<T> a = new Aresta<T>(peso, inicio, fim);
         int indexInicio = conseguirEnderecoMatrizAdjacencia(inicio);
         int indexFim = conseguirEnderecoMatrizAdjacencia(fim);
+        inicio.adicionarArestaSaida(a);
+        fim.adicionarArestaEntrada(a);
         matrizAdjacencia.get(indexInicio).get(indexFim).add(a);
+        arestas.add(a);
         return a;
     }
 
-
     public int conseguirEnderecoMatrizAdjacencia(Vertice<T> v) {
         int id = v.getId();
-        for(int i = 0; i < vertices.size(); i++) {
-            if(vertices.get(i).getId() == id) {
+        for (int i = 0; i < vertices.size(); i++) {
+            if (vertices.get(i).getId() == id) {
                 return i;
             }
         }
         return -1;
     }
 
+    public void removeVertice(Vertice<T> v) {
+        int indexVertice = conseguirEnderecoMatrizAdjacencia(v);
+        vertices.remove(indexVertice);
+        matrizAdjacencia.remove(indexVertice);
+        for (int i = 0; i < matrizAdjacencia.size(); i++) {
+            matrizAdjacencia.get(i).remove(indexVertice);
+        }
+    }
+
+    public void removeAresta(Aresta<T> e) {
+        int indexInicio = conseguirEnderecoMatrizAdjacencia(e.getInicio());
+        int indexFim = conseguirEnderecoMatrizAdjacencia(e.getFim());
+
+        matrizAdjacencia.get(indexInicio).get(indexFim).remove(e);
+    }
+
     public void adicionarVerticeMatrizAdjacencia(Vertice<T> v) {
         matrizAdjacencia.add(new ArrayList<Vector<Aresta<T>>>());
-        for(ArrayList<Vector<Aresta<T>>> i : matrizAdjacencia) {
-            while(i.size() < vertices.size()) {
+        for (ArrayList<Vector<Aresta<T>>> i : matrizAdjacencia) {
+            while (i.size() < vertices.size()) {
                 i.add(new Vector<Aresta<T>>());
             }
         }
@@ -76,12 +94,39 @@ public class Grafo<T> {
     }
 
     public void printMatrizAdjacencia() {
-        for(int i = 0; i < vertices.size(); i++) {
-            for(int j = 0; j < vertices.size(); j++) {
+        for (int i = 0; i < vertices.size(); i++) {
+            for (int j = 0; j < vertices.size(); j++) {
                 System.out.print(matrizAdjacencia.get(i).get(j) + " ");
             }
             System.out.println();
         }
+    }
+
+    public void printMatrizAdjacenciaQtde() {
+        for (int i = 0; i < vertices.size(); i++) {
+            for (int j = 0; j < vertices.size(); j++) {
+                System.out.print(matrizAdjacencia.get(i).get(j).size() + " ");
+            }
+            System.out.println();
+        }
+    }
+
+    public List<Vertice<T>> finalVertices(Aresta<T> e) {
+        return null;
+    }
+
+    public Vertice<T> oposto(Vertice<T> v, Aresta<T> e) {
+        return null;
+    }
+
+    public boolean isAdjacente(Vertice<T> v, Vertice<T> w) {
+        return false;
+    }
+
+    public void substituir(Vertice<T> v, T x) {
+    }
+
+    public void substituir(Aresta<T> v, T x) {
     }
 
 }

@@ -1,4 +1,8 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Vertice<T> {
     private Integer id;
@@ -35,5 +39,9 @@ public class Vertice<T> {
 
     public void adicionarArestaSaida(Aresta<T> aresta) {
         this.arestasSaida.add(aresta);
+    }
+
+    public List<Aresta<T>> arestasIncidentes() {
+        return Collections.unmodifiableList(Stream.concat(arestasEntrada.stream(), arestasSaida.stream()).collect(Collectors.toList()));
     }
 }
