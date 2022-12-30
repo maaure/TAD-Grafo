@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -22,26 +23,36 @@ public class Main {
 
         g.printMatrizAdjacencia();
 
-        System.out.println();
+        g.adicionarAresta(null, v6, v7);
+        g.adicionarAresta(null, v7, v6);
+        g.adicionarAresta(null, v2, v7);
+        g.adicionarAresta(null, v5, v4);
 
-        g.adicionarAresta(null, v1, v2);
-        g.adicionarAresta(null, v2, v1);
+        Aresta<Integer> primeiraAresta = g.getListaArestas().get(0);
 
-        g.adicionarAresta(null, v5, v3);
-        g.adicionarAresta(null, v3, v5);
-        g.adicionarAresta(null, v3, v5);
-        g.adicionarAresta(null, v3, v5);
-        g.adicionarAresta(null, v2, v2);
 
+        printList(g.finalVertices(primeiraAresta));
         g.printMatrizAdjacenciaQtde();
 
-        g.removeVertice(v1);
+        Vertice<Integer> vx = g.oposto(v6, primeiraAresta);
 
-        System.out.println();
+        System.out.println(vx.getData() + " ");
 
+        System.out.println(g.isAdjacente(v2, v7));
+        System.out.println(g.isAdjacente(v7, v2));
 
         g.printMatrizAdjacenciaQtde();
+        g.removeAresta(primeiraAresta);
+        System.out.println();
+        g.printMatrizAdjacenciaQtde();
+
+    }
 
 
+    public static void printList(List<Vertice<Integer>> l) {
+        for(Vertice<Integer> i : l) {
+            System.out.print(i.getData() + " ");
+        }
+        System.out.println();
     }
 }
