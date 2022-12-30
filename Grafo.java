@@ -62,11 +62,11 @@ public class Grafo<T> {
 
     public void removeVertice(Vertice<T> v) {
         int indexVertice = conseguirEnderecoMatrizAdjacencia(v);
-        vertices.remove(indexVertice);
         matrizAdjacencia.remove(indexVertice);
         for (int i = 0; i < matrizAdjacencia.size(); i++) {
             matrizAdjacencia.get(i).remove(indexVertice);
         }
+        vertices.remove(indexVertice);
     }
 
     public void removeAresta(Aresta<T> e) {
@@ -74,6 +74,7 @@ public class Grafo<T> {
         int indexFim = conseguirEnderecoMatrizAdjacencia(e.getFim());
 
         matrizAdjacencia.get(indexInicio).get(indexFim).remove(e);
+        arestas.remove(e);
     }
 
     public void adicionarVerticeMatrizAdjacencia(Vertice<T> v) {
@@ -112,21 +113,25 @@ public class Grafo<T> {
     }
 
     public List<Vertice<T>> finalVertices(Aresta<T> e) {
-        return null;
+        return e.vertices();
     }
 
     public Vertice<T> oposto(Vertice<T> v, Aresta<T> e) {
-        return null;
+        List<Vertice<T>> vertices = e.vertices();
+        if(!vertices.contains(v)) throw new RuntimeException("Vertice não pertence a aresta.");
+        return vertices.get(0).equals(v) ? vertices.get(0) : vertices.get(1);
     }
 
     public boolean isAdjacente(Vertice<T> v, Vertice<T> w) {
-        return false;
+        return v.arestasIncidentes().stream().anyMatch(a -> a.getFim().equals(w));
     }
 
     public void substituir(Vertice<T> v, T x) {
+        v.setData(x);
     }
 
-    public void substituir(Aresta<T> v, T x) {
+    public void substituir(Aresta<T> e, T x) {
+        e.setData(x);
     }
 
 }
