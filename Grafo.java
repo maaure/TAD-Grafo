@@ -139,4 +139,9 @@ public class Grafo<T> {
         return Collections.unmodifiableList(this.arestas);
     }
 
+
+    public List<Aresta<T>> getListaVertices() {
+        return Collections.unmodifiableList(this.vertices);
+    }
+
 }
