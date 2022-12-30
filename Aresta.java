@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Aresta<T> {
     private Integer id;
     private Double peso;
@@ -33,8 +36,6 @@ public class Aresta<T> {
         return this.direcionado;
     }
 
-
-
     public void setDirecionado(Boolean isDirecionado) {
         this.direcionado = isDirecionado;
     }
@@ -65,6 +66,13 @@ public class Aresta<T> {
 
     public void setFim(Vertice<T> fim) {
         this.fim = fim;
+    }
+
+    public List<Vertice<T>> vertices() {
+        List<Vertice<T>> l = new ArrayList<Vertice<T>>();
+        l.add(inicio);
+        l.add(fim);
+        return l;
     }
 
     
