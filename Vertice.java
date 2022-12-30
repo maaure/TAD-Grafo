@@ -44,4 +44,8 @@ public class Vertice<T> {
     public List<Aresta<T>> arestasIncidentes() {
         return Collections.unmodifiableList(Stream.concat(arestasEntrada.stream(), arestasSaida.stream()).collect(Collectors.toList()));
     }
+
+    public List<Aresta<T>> arestasSaida() {
+        return Collections.unmodifiableList(arestasSaida);
+    }
 }
