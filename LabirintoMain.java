@@ -3,11 +3,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 
-public class Labirinto {
+public class LabirintoMain {
 
     public static void main(String[] args) {
         String mazeString = getFileAsString(
-            openFile("./labitinto.path")
+            openFile(args[0])
         );
 
         Integer m[][] = getMazeStringAsMatrix(mazeString);
@@ -15,12 +15,11 @@ public class Labirinto {
 
         Maze maze = new Maze(m);
 
-        printMatrix(m);
     }
 
     private static BufferedReader openFile(String path){
         try {
-            return new BufferedReader(new FileReader(new File("./labirinto.dat")));
+            return new BufferedReader(new FileReader(new File(path)));
         } catch (Exception e) {
             System.out.println(e.getStackTrace());
         }
