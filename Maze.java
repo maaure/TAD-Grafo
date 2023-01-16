@@ -8,8 +8,6 @@ public class Maze {
         this.vertices = new Vertice[m.length][m[0].length];
         grafo = new Grafo<Integer>();
 
-
-        System.out.println(m.length + " " + m[0].length);
         for(int i = 0; i < m.length; i++) {
             for(int j = 0 ; j < m[0].length; j++) {
                 vertices[i][j] = new Vertice<Integer>(m[i][j]);
