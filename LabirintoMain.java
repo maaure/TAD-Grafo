@@ -13,7 +13,7 @@ public class LabirintoMain {
         Integer m[][] = getMazeStringAsMatrix(mazeString);
         //System.out.println(maze);
 
-        Maze maze = new Maze(m);
+        Labirinto maze = new Labirinto(m);
 
     }
 
