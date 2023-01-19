@@ -51,6 +51,14 @@ public class Grafo<T> {
         return a;
     }
 
+
+    public List<Aresta<T>> adicionarArestaNaoDirigida(Double peso, Vertice<T> inicio, Vertice<T> fim) {
+        List<Aresta<T>> a = new ArrayList<Aresta<T>>();
+        a.add(adicionarAresta(peso, inicio, fim));
+        a.add(adicionarAresta(peso, fim, inicio));
+        return a;
+    }
+
     public int conseguirEnderecoMatrizAdjacencia(Vertice<T> v) {
         int id = v.getId();
         for (int i = 0; i < vertices.size(); i++) {
@@ -102,6 +110,51 @@ public class Grafo<T> {
             }
             System.out.println();
         }
+    }
+
+    public void printMatrizAdjacenciaValor() {
+        String matrizString = "";
+        int maiorCelula = 0;
+        for (int i = 0; i < vertices.size(); i++) {
+            for (int j = 0; j < vertices.size(); j++) {
+                String celula = "[*]";
+                String valorCelula = "";
+
+                for(Aresta<T> a : matrizAdjacencia.get(i).get(j)) {
+                    valorCelula += a.getFim().getData();
+                    if(!a.equals(matrizAdjacencia.get(i).get(j).lastElement()))
+                        valorCelula += ", ";
+                }
+
+                if(valorCelula.length() > maiorCelula)
+                    maiorCelula = valorCelula.length();
+                
+                if(valorCelula.length() > 0)
+                    celula = celula.replace("*", valorCelula);
+                
+                matrizString += celula;
+
+            }
+
+            matrizString += "\n";
+        }
+
+        String placeholder = "";
+        System.out.println(maiorCelula);
+        if(maiorCelula % 2 == 0) {
+            for(int i = 0; i < maiorCelula/2; i++)
+                placeholder += " ";
+            matrizString = matrizString.replaceAll("\\[","["+placeholder);
+            matrizString = matrizString.replaceAll("\\]",placeholder + "]");
+        } else {
+            for(int i = 0; i < maiorCelula/2; i++)
+                placeholder += " ";
+            matrizString = matrizString.replaceAll("[","["+placeholder);
+            matrizString = matrizString.replaceAll("]",placeholder+" ]");
+        }
+
+        matrizString = matrizString.replaceAll("\\*", placeholder);
+        System.out.println(matrizString);
     }
 
     public void printMatrizAdjacenciaQtde() {
