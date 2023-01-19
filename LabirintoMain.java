@@ -6,14 +6,13 @@ import java.io.IOException;
 public class LabirintoMain {
 
     public static void main(String[] args) {
-        String mazeString = getFileAsString(
+        String labirintoString = getFileAsString(
             openFile(args[0])
         );
 
-        Integer m[][] = getMazeStringAsMatrix(mazeString);
-        //System.out.println(maze);
+        Integer m[][] = getMazeStringAsMatrix(labirintoString);
 
-        Labirinto maze = new Labirinto(m);
+        Labirinto labirinto = new Labirinto(m);
 
     }
 
