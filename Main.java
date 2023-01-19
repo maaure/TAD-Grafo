@@ -3,48 +3,72 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        Grafo<Integer> g = new Grafo<Integer>();
+        Grafo<String> gr = new Grafo<String>();
         
-        Vertice<Integer> v1 = new Vertice<Integer>(5);
-        Vertice<Integer> v2 = new Vertice<Integer>(6);
-        Vertice<Integer> v3 = new Vertice<Integer>(1);
-        Vertice<Integer> v4 = new Vertice<Integer>(8);
-        Vertice<Integer> v5 = new Vertice<Integer>(15);
-        Vertice<Integer> v6 = new Vertice<Integer>(0);
-        Vertice<Integer> v7 = new Vertice<Integer>(-5);
+        Vertice<String> a = new Vertice<String>("A");
+        Vertice<String> b = new Vertice<String>("B");
+        Vertice<String> c = new Vertice<String>("C");
+        Vertice<String> d = new Vertice<String>("D");
+        Vertice<String> e = new Vertice<String>("E");
+        Vertice<String> f = new Vertice<String>("F");
+        Vertice<String> g = new Vertice<String>("G");
+        Vertice<String> h = new Vertice<String>("H");
+        Vertice<String> i = new Vertice<String>("I");
+        Vertice<String> j = new Vertice<String>("J");
+        Vertice<String> k = new Vertice<String>("K");
+        Vertice<String> l = new Vertice<String>("L");
+        Vertice<String> m = new Vertice<String>("M");
+        Vertice<String> n = new Vertice<String>("N");
+        Vertice<String> o = new Vertice<String>("O");
+        Vertice<String> p = new Vertice<String>("P");
 
-        g.adicionarVertice(v1);
-        g.adicionarVertice(v2);
-        g.adicionarVertice(v3);
-        g.adicionarVertice(v4);
-        g.adicionarVertice(v5);
-        g.adicionarVertice(v6);
-        g.adicionarVertice(v7);
+        Double peso = 1D;
 
-        g.printMatrizAdjacencia();
+        gr.adicionarVertice(a);
+        gr.adicionarVertice(b);
+        gr.adicionarVertice(c);
+        gr.adicionarVertice(d);
+        gr.adicionarVertice(e);
+        gr.adicionarVertice(f);
+        gr.adicionarVertice(g);
+        gr.adicionarVertice(h);
+        gr.adicionarVertice(i);
+        gr.adicionarVertice(j);
+        gr.adicionarVertice(k);
+        gr.adicionarVertice(l);
+        gr.adicionarVertice(m);
+        gr.adicionarVertice(n);
+        gr.adicionarVertice(o);
+        gr.adicionarVertice(p);
 
-        g.adicionarAresta(null, v6, v7);
-        g.adicionarAresta(null, v7, v6);
-        g.adicionarAresta(null, v2, v7);
-        g.adicionarAresta(null, v5, v4);
+        gr.adicionarArestaNaoDirigida(peso, a, b);
+        gr.adicionarArestaNaoDirigida(peso, a, b);
 
-        Aresta<Integer> primeiraAresta = g.getListaArestas().get(0);
+        gr.adicionarArestaNaoDirigida(peso, a, f);
+        gr.adicionarArestaNaoDirigida(peso, a, e);
+        gr.adicionarArestaNaoDirigida(peso, b, f);
+        gr.adicionarArestaNaoDirigida(peso, b, c);
+        gr.adicionarArestaNaoDirigida(peso, c, g);
+        gr.adicionarArestaNaoDirigida(peso, c, d);
+        gr.adicionarArestaNaoDirigida(peso, d, g);
+        gr.adicionarArestaNaoDirigida(peso, d, h);
+        gr.adicionarArestaNaoDirigida(peso, h, l);
+        gr.adicionarArestaNaoDirigida(peso, l, g);
+        gr.adicionarArestaNaoDirigida(peso, l, p);
+        gr.adicionarArestaNaoDirigida(peso, p, o);
+        gr.adicionarArestaNaoDirigida(peso, o, k);
+        gr.adicionarArestaNaoDirigida(peso, j, g);
+        gr.adicionarArestaNaoDirigida(peso, j, k);
+        gr.adicionarArestaNaoDirigida(peso, j, i);
+        gr.adicionarArestaNaoDirigida(peso, n, i);
+        gr.adicionarArestaNaoDirigida(peso, n, k);
+        gr.adicionarArestaNaoDirigida(peso, n, m);
+        gr.adicionarArestaNaoDirigida(peso, m, i);
+        gr.adicionarArestaNaoDirigida(peso, i, e);
+        gr.adicionarArestaNaoDirigida(peso, f, i);
+        gr.adicionarArestaNaoDirigida(peso, k, g);
 
-
-        printList(g.finalVertices(primeiraAresta));
-        g.printMatrizAdjacenciaQtde();
-
-        Vertice<Integer> vx = g.oposto(v6, primeiraAresta);
-
-        System.out.println(vx.getData() + " ");
-
-        System.out.println(g.isAdjacente(v2, v7));
-        System.out.println(g.isAdjacente(v7, v2));
-
-        g.printMatrizAdjacenciaQtde();
-        g.removeAresta(primeiraAresta);
-        System.out.println();
-        g.printMatrizAdjacenciaQtde();
+        gr.printMatrizAdjacenciaValor();
 
     }
 
