@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Labirinto {
     
@@ -8,20 +10,23 @@ public class Labirinto {
     private Vertice<Integer>[][] vertices;
     private List<Vertice<Integer>> entradas;
     private List<Vertice<Integer>> saidas;
+    private final double INFINITO = Double.MAX_VALUE;
+    private List<List<Vertice<Integer>>> caminhos;
 
     @SuppressWarnings("unchecked")
     public Labirinto(Integer[][] m) {
         this.entradas = new ArrayList<>();
         this.saidas = new ArrayList<>();
         this.vertices = new Vertice[m.length][m[0].length];
+        this.caminhos = new ArrayList<List<Vertice<Integer>>>();
         grafo = new Grafo<Integer>();
 
         for(int i = 0; i < m.length; i++) {
             for(int j = 0 ; j < m[0].length; j++) {
                 if(m[i][j] != 1) {
                     vertices[i][j] = new Vertice<Integer>(m[i][j]);
+                    vertices[i][j].setCoordenadas(i, j);
                     grafo.adicionarVertice(vertices[i][j]);
-
                 }
             }
         }
@@ -29,8 +34,40 @@ public class Labirinto {
         conectarVertices();
         encontrarSaidaseEntradas();
 
-        grafo.printMatrizAdjacencia();
+        //grafo.printMatrizAdjacencia();
 
+    }
+
+
+
+    public void dijkstra() {
+        Vertice<Integer> in = entradas.get(0);
+        List<Vertice<Integer>> Q = new ArrayList<Vertice<Integer>>();
+        for(Vertice<Integer> v : grafo.getListaVertices()) {
+            v.setDistancia(INFINITO);
+            v.setAnterior(null);
+            Q.add(v);
+        }
+        in.setDistancia(0);
+
+        while(!Q.isEmpty()) {
+            Vertice<Integer> u = Q.stream().min((a, b) -> Double.compare(a.getDistancia(), b.getDistancia())).get();
+            Q.remove(u);
+
+            for(Vertice<Integer> v : u.getArestasSaida().stream().map(a -> a.getFim()).collect(Collectors.toList())) {
+                double alt = u.getDistancia() + grafo.getAresta(u, v).getPeso();
+                if(alt < v.getDistancia()) {
+                    v.setDistancia(alt);
+                    v.setAnterior(u);
+                }
+            }
+        }
+    }
+
+    public void printListaVerticesComDistancia() {
+        for(Vertice<Integer> v : grafo.getListaVertices()) {
+            System.out.println("[" + v.getX() + ", " + v.getY() + "]: " + v.getDistancia());
+        }
     }
 
     private void encontrarSaidaseEntradas() {
@@ -50,19 +87,19 @@ public class Labirinto {
                 if(Objects.nonNull(vertices[i][j]) && (vertices[i][j].getData() == 0 || vertices[i][j].getData() == 2)) {
                     
                     if(Objects.nonNull(vertices[i-1][j]) && (vertices[i-1][j].getData() == 0 || vertices[i-1][j].getData() == 3)) {
-                        grafo.adicionarAresta(null, vertices[i][j], vertices[i-1][j]);
+                        grafo.adicionarAresta(1, vertices[i][j], vertices[i-1][j]);
                     }
                     
                     if(Objects.nonNull(vertices[i+1][j]) && (vertices[i+1][j].getData() == 0 || vertices[i+1][j].getData() == 3)) {
-                        grafo.adicionarAresta(null, vertices[i][j], vertices[i+1][j]);
+                        grafo.adicionarAresta(1, vertices[i][j], vertices[i+1][j]);
                     }
                     
                     if(Objects.nonNull(vertices[i][j+1]) && (vertices[i][j+1].getData() == 0 || vertices[i][j+1].getData() == 3)) {
-                        grafo.adicionarAresta(null, vertices[i][j], vertices[i][j+1]);
+                        grafo.adicionarAresta(1, vertices[i][j], vertices[i][j+1]);
                     }
                 
                     if(Objects.nonNull(vertices[i][j-1]) && (vertices[i][j-1].getData() == 0 || vertices[i][j-1].getData() == 3)) {
-                        grafo.adicionarAresta(null, vertices[i][j], vertices[i][j-1]);
+                        grafo.adicionarAresta(1, vertices[i][j], vertices[i][j-1]);
                     }
                 
 
@@ -70,5 +107,36 @@ public class Labirinto {
             }
         }
     }
+
+    public void listarCaminhosSaida() {
+        for(Vertice<Integer> v : saidas) {
+            Vertice<Integer> prev = v;
+            List<Vertice<Integer>> caminho = new ArrayList<>();
+            while(prev != null) {
+                caminho.add(prev);
+                prev = prev.getAnterior();
+            }
+            Collections.reverse(caminho);
+            caminhos.add(caminho);
+        }
+
+    }
+
+    public void mostrarCaminhosSaida() {
+        listarCaminhosSaida();
+        for(List<Vertice<Integer>> l : caminhos) {
+            for(int i = 0; i < l.size(); i++) {
+                if(i == 0) {
+                    System.out.print("[" + l.get(i).getX() + ", " + l.get(i).getY() + "] -> ");
+                }
+                System.out.print("(" + l.get(i).getX() + ", " + l.get(i).getY() + ")");
+                if(i != l.size() - 1) {
+                    System.out.print(" -> ");
+                }
+            }
+            System.out.println();
+        }
+    }
+
 
 }

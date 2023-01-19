@@ -10,13 +10,39 @@ public class Vertice<T> {
     private ArrayList<Aresta<T>> arestasEntrada;
     private ArrayList<Aresta<T>> arestasSaida;
     private boolean visitada;
+    private double distancia;
+    private Vertice<T> anterior;
+    private Integer x;
+    private Integer y;
+    private List<Vertice<T>> anteriores;
 
+    
     public Vertice(T data) {
         this.data = data;
         this.arestasEntrada = new ArrayList<Aresta<T>>();
         this.arestasSaida = new ArrayList<Aresta<T>>();
         this.id = -1;
         this.visitada = false;
+        this.anteriores = new ArrayList<Vertice<T>>();
+    }
+
+    public void setX(Integer x) {
+        this.x = x;
+    }
+    public void setY(Integer y) {
+        this.y = y;
+    }
+
+    public List<Vertice<T>> getAnteriores() {
+        return this.anteriores;
+    }
+
+    public void setAnteriores(List<Vertice<T>> anteriores) {
+        this.anteriores = anteriores;
+    }
+
+    public void addAnterior(Vertice<T> v) {
+        this.anteriores.add(v);
     }
 
     public void setId(Integer id) {
@@ -84,4 +110,41 @@ public class Vertice<T> {
         this.visitada = visitada;
     }
 
+
+    public boolean isVisitada() {
+        return this.visitada;
+    }
+
+    public boolean getVisitada() {
+        return this.visitada;
+    }
+
+    public double getDistancia() {
+        return this.distancia;
+    }
+
+    public void setDistancia(double distancia) {
+        this.distancia = distancia;
+    }
+
+    public Vertice<T> getAnterior() {
+        return this.anterior;
+    }
+
+    public void setAnterior(Vertice<T> anterior) {
+        this.anterior = anterior;
+    }
+
+    public void setCoordenadas(Integer x, Integer y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public Integer getX() {
+        return this.x;
+    }
+
+    public Integer getY() {
+        return this.y;
+    }
 }

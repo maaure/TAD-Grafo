@@ -13,6 +13,13 @@ public class LabirintoMain {
         Integer m[][] = getMazeStringAsMatrix(labirintoString);
 
         Labirinto labirinto = new Labirinto(m);
+        labirinto.dijkstra();
+        
+
+        printMatrix(m);
+        //labirinto.printListaVerticesComDistancia();
+        labirinto.mostrarCaminhosSaida();
+        
 
     }
 
@@ -53,12 +60,20 @@ public class LabirintoMain {
     }
 
     private static void printMatrix(Object[][] m) {
+        System.out.print("    ");
+        for(int i = 0; i < m[0].length; i++) {
+            System.out.print(i + " ");
+        }
+        System.out.println();
+        System.out.println("------------------------------");
         for(int i = 0; i < m.length; i++) {
+            System.out.print(((i<10) ? " " : "") + i + "| ");
             for(int j = 0 ; j < m[0].length; j++) {
                 System.out.print(m[i][j] + " ");
             }
             System.out.println();
         }
+        System.out.println();
     }
 
 }

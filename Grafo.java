@@ -40,7 +40,7 @@ public class Grafo<T> {
         return v;
     }
 
-    public Aresta<T> adicionarAresta(Double peso, Vertice<T> inicio, Vertice<T> fim) {
+    public Aresta<T> adicionarAresta(double peso, Vertice<T> inicio, Vertice<T> fim) {
         Aresta<T> a = new Aresta<T>(peso, inicio, fim);
         int indexInicio = conseguirEnderecoMatrizAdjacencia(inicio);
         int indexFim = conseguirEnderecoMatrizAdjacencia(fim);
@@ -178,6 +178,10 @@ public class Grafo<T> {
 
     public boolean isAdjacente(Vertice<T> v, Vertice<T> w) {
         return v.arestasIncidentes().stream().anyMatch(a -> a.getFim().equals(w));
+    }
+
+    public Aresta<T> getAresta(Vertice<T> v, Vertice<T> w) {
+        return v.arestasSaida().stream().filter(a -> a.getFim().equals(w)).findFirst().get();
     }
 
     public void substituir(Vertice<T> v, T x) {
