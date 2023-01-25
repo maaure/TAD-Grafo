@@ -81,6 +81,7 @@ public class Labirinto {
     public void dijkstra() {
         Vertice<Integer> in = entradas.get(0);
         List<Vertice<Integer>> Q = new ArrayList<Vertice<Integer>>();
+        List<Vertice<Integer>> nuvem = new ArrayList<Vertice<Integer>>();
         for(Vertice<Integer> v : grafo.getListaVertices()) {
             v.setDistancia(INFINITO);
             v.setAnterior(null);
@@ -91,6 +92,8 @@ public class Labirinto {
         while(!Q.isEmpty()) {
             Vertice<Integer> u = Q.stream().min((a, b) -> Double.compare(a.getDistancia(), b.getDistancia())).get();
             Q.remove(u);
+            u.setVisitada(true);
+            nuvem.add(u);
 
             for(Vertice<Integer> v : u.getArestasSaida().stream().map(a -> a.getFim()).collect(Collectors.toList())) {
                 double alt = u.getDistancia() + grafo.getAresta(u, v).getPeso();
@@ -142,19 +145,19 @@ public class Labirinto {
 
                     //diagonais
 
-                    if(Objects.nonNull(vertices[i-1][j-1]) && (vertices[i-1][j-1].getData() == 0 || vertices[i-1][j].getData() == 3)) {
+                    if(Objects.nonNull(vertices[i-1][j-1]) && (vertices[i-1][j-1].getData() == 0 || vertices[i-1][j-1].getData() == 3)) {
                         grafo.adicionarAresta(14, vertices[i][j], vertices[i-1][j-1]);
                     }
                     
-                    if(Objects.nonNull(vertices[i+1][j+1]) && (vertices[i+1][j+1].getData() == 0 || vertices[i+1][j].getData() == 3)) {
+                    if(Objects.nonNull(vertices[i+1][j+1]) && (vertices[i+1][j+1].getData() == 0 || vertices[i+1][j+1].getData() == 3)) {
                         grafo.adicionarAresta(14, vertices[i][j],vertices[i+1][j+1]);
                     }
                     
-                    if(Objects.nonNull(vertices[i-1][j+1]) && (vertices[i-1][j+1].getData() == 0 || vertices[i][j+1].getData() == 3)) {
+                    if(Objects.nonNull(vertices[i-1][j+1]) && (vertices[i-1][j+1].getData() == 0 || vertices[i-1][j+1].getData() == 3)) {
                         grafo.adicionarAresta(14, vertices[i][j], vertices[i-1][j+1]);
                     }
                 
-                    if(Objects.nonNull(vertices[i-1][j-1]) && (vertices[i-1][j-1].getData() == 0 || vertices[i][j-1].getData() == 3)) {
+                    if(Objects.nonNull(vertices[i-1][j-1]) && (vertices[i-1][j-1].getData() == 0 || vertices[i-1][j-1].getData() == 3)) {
                         grafo.adicionarAresta(14, vertices[i][j], vertices[i-1][j-1]);
                     }
                 

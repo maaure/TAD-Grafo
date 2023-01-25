@@ -20,18 +20,22 @@ public class LabirintoMain {
 
         if(line.equalsIgnoreCase("-d")) {
             System.out.println("Dijkstra: ");
+            Long init = System.currentTimeMillis();
             labirinto.dijkstra();
+            Long end = System.currentTimeMillis();
+            System.out.println("Tempo de execucao: " + (end - init));
             
         } else if (line.equalsIgnoreCase("-a")) {
             System.out.println("A*: ");
+            Long init = System.currentTimeMillis();
             labirinto.a_star();
-
+            Long end = System.currentTimeMillis();
+            System.out.println("Tempo de execucao: " + (end - init));
         }
 
         
 
         printMatrix(m);
-        //labirinto.printListaVerticesComDistancia();
         labirinto.mostrarCaminhosSaida();
         
 
