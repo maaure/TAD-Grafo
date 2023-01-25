@@ -38,6 +38,44 @@ public class Labirinto {
 
     }
 
+    public void a_star() {
+        List<Vertice<Integer>> aberta = new ArrayList<Vertice<Integer>>();
+        List<Vertice<Integer>> fechada = new ArrayList<Vertice<Integer>>();
+        Vertice<Integer> entrada = entradas.get(0);
+        aberta.add(entrada);
+
+        while(true) {
+            Vertice<Integer> k = aberta.stream().min((a, b) -> Double.compare(a.getF(), b.getF())).get();
+            aberta.remove(k);
+            fechada.add(k);
+
+            for(Vertice<Integer> v : k.getArestasSaida().stream().map(a -> a.getFim()).collect(Collectors.toList())) {
+                if(fechada.contains(v)) continue;
+                if(!aberta.contains(v)) {
+                    aberta.add(v);
+                    v.setAnterior(k);
+                    v.calcularG(grafo.getAresta(k, v).getPeso());
+                    v.setH(calcularH(v, saidas.get(0)));
+                    v.setF(v.getH() + v.getG());
+                } else {
+                    if(v.getG() < k.getG()) {
+                        v.setAnterior(k);
+                        v.calcularG(grafo.getAresta(v, k).getPeso());
+                        v.setF(v.getH() + v.getG());
+                    }
+                }
+
+            }
+            if(k.getData() == 3) {
+                break;
+            } 
+        }
+    }
+
+    public double calcularH(Vertice<Integer> v, Vertice<Integer> saida) {
+        return Math.sqrt(Math.pow(v.getX() - saida.getX(), 2) + Math.pow(v.getY() - saida.getY(), 2));
+    }
+
 
 
     public void dijkstra() {
@@ -87,19 +125,37 @@ public class Labirinto {
                 if(Objects.nonNull(vertices[i][j]) && (vertices[i][j].getData() == 0 || vertices[i][j].getData() == 2)) {
                     
                     if(Objects.nonNull(vertices[i-1][j]) && (vertices[i-1][j].getData() == 0 || vertices[i-1][j].getData() == 3)) {
-                        grafo.adicionarAresta(1, vertices[i][j], vertices[i-1][j]);
+                        grafo.adicionarAresta(10, vertices[i][j], vertices[i-1][j]);
                     }
                     
                     if(Objects.nonNull(vertices[i+1][j]) && (vertices[i+1][j].getData() == 0 || vertices[i+1][j].getData() == 3)) {
-                        grafo.adicionarAresta(1, vertices[i][j], vertices[i+1][j]);
+                        grafo.adicionarAresta(10, vertices[i][j], vertices[i+1][j]);
                     }
                     
                     if(Objects.nonNull(vertices[i][j+1]) && (vertices[i][j+1].getData() == 0 || vertices[i][j+1].getData() == 3)) {
-                        grafo.adicionarAresta(1, vertices[i][j], vertices[i][j+1]);
+                        grafo.adicionarAresta(10, vertices[i][j], vertices[i][j+1]);
                     }
                 
                     if(Objects.nonNull(vertices[i][j-1]) && (vertices[i][j-1].getData() == 0 || vertices[i][j-1].getData() == 3)) {
-                        grafo.adicionarAresta(1, vertices[i][j], vertices[i][j-1]);
+                        grafo.adicionarAresta(10, vertices[i][j], vertices[i][j-1]);
+                    }
+
+                    //diagonais
+
+                    if(Objects.nonNull(vertices[i-1][j-1]) && (vertices[i-1][j-1].getData() == 0 || vertices[i-1][j].getData() == 3)) {
+                        grafo.adicionarAresta(14, vertices[i][j], vertices[i-1][j-1]);
+                    }
+                    
+                    if(Objects.nonNull(vertices[i+1][j+1]) && (vertices[i+1][j+1].getData() == 0 || vertices[i+1][j].getData() == 3)) {
+                        grafo.adicionarAresta(14, vertices[i][j],vertices[i+1][j+1]);
+                    }
+                    
+                    if(Objects.nonNull(vertices[i-1][j+1]) && (vertices[i-1][j+1].getData() == 0 || vertices[i][j+1].getData() == 3)) {
+                        grafo.adicionarAresta(14, vertices[i][j], vertices[i-1][j+1]);
+                    }
+                
+                    if(Objects.nonNull(vertices[i-1][j-1]) && (vertices[i-1][j-1].getData() == 0 || vertices[i][j-1].getData() == 3)) {
+                        grafo.adicionarAresta(14, vertices[i][j], vertices[i-1][j-1]);
                     }
                 
 

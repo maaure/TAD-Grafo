@@ -15,6 +15,9 @@ public class Vertice<T> {
     private Integer x;
     private Integer y;
     private List<Vertice<T>> anteriores;
+    private double f;
+    private double g;
+    private double h;
 
     
     public Vertice(T data) {
@@ -24,6 +27,9 @@ public class Vertice<T> {
         this.id = -1;
         this.visitada = false;
         this.anteriores = new ArrayList<Vertice<T>>();
+        this.f = 0;
+        this.g = 0;
+        this.h = 0;
     }
 
     public void setX(Integer x) {
@@ -147,4 +153,39 @@ public class Vertice<T> {
     public Integer getY() {
         return this.y;
     }
+
+
+    public double getF() {
+        return this.f;
+    }
+
+    public void setF(double f) {
+        this.f = f;
+    }
+
+    public double getG() {
+        return this.g;
+    }
+
+    public void setG(double g) {
+        this.g = g;
+    }
+
+    public double getH() {
+        return this.h;
+    }
+
+    public void setH(double h) {
+        this.h = h;
+    }
+
+    public void calcularG(double g_calc) {
+        Vertice<T> v = this;
+        while(v != null) {
+            g_calc += v.getG();
+            v = v.getAnterior();
+        }
+        this.g = g_calc;
+    }
+    
 }

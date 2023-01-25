@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Scanner;
 
 public class LabirintoMain {
 
@@ -13,7 +14,20 @@ public class LabirintoMain {
         Integer m[][] = getMazeStringAsMatrix(labirintoString);
 
         Labirinto labirinto = new Labirinto(m);
-        labirinto.dijkstra();
+
+        Scanner scanner = new Scanner(System.in);
+        String line = scanner.nextLine();
+
+        if(line.equalsIgnoreCase("-d")) {
+            System.out.println("Dijkstra: ");
+            labirinto.dijkstra();
+            
+        } else if (line.equalsIgnoreCase("-a")) {
+            System.out.println("A*: ");
+            labirinto.a_star();
+
+        }
+
         
 
         printMatrix(m);
