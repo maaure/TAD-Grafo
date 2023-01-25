@@ -48,6 +48,7 @@ public class Labirinto {
             Vertice<Integer> k = aberta.stream().min((a, b) -> Double.compare(a.getF(), b.getF())).get();
             aberta.remove(k);
             fechada.add(k);
+            k.setVisitada(true);
 
             for(Vertice<Integer> v : k.getArestasSaida().stream().map(a -> a.getFim()).collect(Collectors.toList())) {
                 if(fechada.contains(v)) continue;
@@ -179,7 +180,10 @@ public class Labirinto {
             caminhos.add(caminho);
         }
 
+        pintarCaminho();
+
     }
+
 
     public void mostrarCaminhosSaida() {
         listarCaminhosSaida();
@@ -195,6 +199,10 @@ public class Labirinto {
             }
             System.out.println();
         }
+    }
+
+    public Vertice<Integer>[][] vertices() {
+        return this.vertices;
     }
 
 

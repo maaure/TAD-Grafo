@@ -18,7 +18,7 @@ public class Vertice<T> {
     private double f;
     private double g;
     private double h;
-
+    private boolean caminho;
     
     public Vertice(T data) {
         this.data = data;
@@ -30,6 +30,7 @@ public class Vertice<T> {
         this.f = 0;
         this.g = 0;
         this.h = 0;
+        this.caminho = false;
     }
 
     public void setX(Integer x) {
@@ -186,6 +187,14 @@ public class Vertice<T> {
             v = v.getAnterior();
         }
         this.g = g_calc;
+    }
+
+    public boolean isCaminho() {
+        return this.caminho;
+    }
+
+    public void setCaminho(boolean caminho) {
+        this.caminho = caminho;
     }
     
 }
