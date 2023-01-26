@@ -7,13 +7,18 @@ import java.util.Objects;
 public class LabirintoMain {
 
     public static void main(String[] args) {
+        if(args.length < 1) {
+            System.out.println("java LabirintoMain <nome_do_labirinto> -d|-a\n-d: Executa o algorítmo de Dijkstra\n-a: Executa o algorítmo A*");
+        }
+
+
         String labirintoString = getFileAsString(
             openFile(args[0])
         );
 
-        Integer m[][] = getMazeStringAsMatrix(labirintoString);
-
-        Labirinto labirinto = new Labirinto(m);
+        Labirinto labirinto = new Labirinto(
+            getMazeStringAsMatrix(labirintoString)
+        );
 
         if(args[1].equalsIgnoreCase("-d")) {
             System.out.println("Dijkstra: ");
@@ -44,7 +49,8 @@ public class LabirintoMain {
         try {
             return new BufferedReader(new FileReader(new File(path)));
         } catch (Exception e) {
-            System.out.println(e.getStackTrace());
+            
+            System.out.println("Erro: Arquivo " + path + " não encontrado.\n" + e.getStackTrace());
         }
         return null;
     }
