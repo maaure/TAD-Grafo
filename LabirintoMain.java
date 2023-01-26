@@ -17,16 +17,18 @@ public class LabirintoMain {
 
         if(args[1].equalsIgnoreCase("-d")) {
             System.out.println("Dijkstra: ");
-            Long init = System.currentTimeMillis();
+            Long init = System.nanoTime();
             labirinto.dijkstra();
-            Long end = System.currentTimeMillis();
-            System.out.println("Tempo de execucao: " + (end - init));
+            Long end = System.nanoTime();
+            Double eplasedTime = (end.doubleValue() - init.doubleValue())/1000000;
+            System.out.println("Tempo de execucao: " + eplasedTime + "ms");
         } else if (args[1].equalsIgnoreCase("-a")) {
             System.out.println("A*: ");
-            Long init = System.currentTimeMillis();
+            Long init = System.nanoTime();
             labirinto.a_star();
-            Long end = System.currentTimeMillis();
-            System.out.println("Tempo de execucao: " + (end - init));
+            Long end = System.nanoTime();
+            Double eplasedTime = (end.doubleValue() - init.doubleValue())/1000000;
+            System.out.println("Tempo de execucao: " + eplasedTime + "ms");
         }
 
         
