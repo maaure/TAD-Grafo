@@ -15,7 +15,6 @@ public class LabirintoMain {
 
         Labirinto labirinto = new Labirinto(m);
 
-
         if(args[1].equalsIgnoreCase("-d")) {
             System.out.println("Dijkstra: ");
             Long init = System.currentTimeMillis();
@@ -32,7 +31,8 @@ public class LabirintoMain {
 
         
 
-        printMatrix(m, labirinto);
+        labirinto.listarCaminhosSaida();
+        labirinto.printLabirinto();
         labirinto.mostrarCaminhosSaida();
         
 
@@ -72,34 +72,6 @@ public class LabirintoMain {
         }
 
         return m;
-    }
-
-    private static void printMatrix(Object[][] m, Labirinto l) {
-        Vertice<Integer>[][] vertices = l.vertices();
-
-        System.out.print("    ");
-        for(int i = 0; i < m[0].length; i++) {
-            System.out.print(i + " ");
-        }
-        System.out.println();
-        System.out.println("------------------------------");
-        for(int i = 0; i < m.length; i++) {
-            System.out.print(((i<10) ? " " : "") + i + "| ");
-            for(int j = 0 ; j < m[0].length; j++) {
-                if(Objects.nonNull(vertices[i][j])) {
-                    if(vertices[i][j].isVisitada()) {
-                        System.out.print("\u001B[41m");
-                    } 
-                    if(vertices[i][j].isCaminho()) {
-                        System.out.println("ok");
-                        System.out.print("\u001B[32m");
-                    }
-                }
-                System.out.print(m[i][j] + " \033[0m");
-            }
-            System.out.println();
-        }
-        System.out.println();
     }
 
 }

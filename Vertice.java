@@ -155,7 +155,6 @@ public class Vertice<T> {
         return this.y;
     }
 
-
     public double getF() {
         return this.f;
     }
@@ -193,8 +192,8 @@ public class Vertice<T> {
         return this.caminho;
     }
 
-    public void setCaminho(boolean caminho) {
-        this.caminho = caminho;
+    public void setCaminho() {
+        this.caminho = true;
     }
     
 }
